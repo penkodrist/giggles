@@ -1,0 +1,214 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+:root {
+    --app-bg: #121212;
+    --app-containers-bg: #242424;
+    --app-download-btns-bg: rgba(60 60 60 / 0.5);
+    --app-main-animation-curve: cubic-bezier(.47,.01,0,.95);
+}
+
+* {
+    font-family: IBM Plex Mono, sans-serif;
+    margin: 0;
+    user-select: none;
+    color: white;
+    scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+    width: 0
+}
+
+.appDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--app-bg);
+    box-sizing: border-box;
+    padding: 30px 100px;
+    .app-header {
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: fit-content;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        img {
+            animation: logoSpin infinite 2s ease;
+        }
+        .logo-wrapper {
+            display: flex;
+            flex-direction: row;
+            box-sizing: border-box;
+            padding: 20px 22px 20px 20px;
+            border-radius: 10px;
+            background-color: #242424;
+            font-weight: 200;
+            font-style: italic;
+            gap: 10px;
+            transition: all .2s ease;
+        }
+        .help {
+            opacity: 0.5;
+            cursor: pointer;
+            text-decoration: underline;
+            position: absolute;
+            right: 0;
+        }
+    }
+    .main-content-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        flex-grow: 1;
+        border-radius: 10px;
+        .search-box-wrapper {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 50px;
+            min-height: 50px;
+            label {
+                width: inherit;
+                height: inherit;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                .search-box {
+                    display: flex;
+                    text-align: center;
+                    width: inherit;
+                    height: inherit;
+                    border: none;
+                    outline: none;
+                    border-radius: 10px;
+                    background-color: var(--app-containers-bg);
+                }
+                .search-box::placeholder {
+                    opacity: 1;
+                    transform: translateY(0);
+                    transition: .5s var(--app-main-animation-curve);
+                }
+                .search-box:focus::placeholder {
+                    transform: translateY(20px);
+                    opacity: 0;
+                }
+                .search-box::placeholder:before {
+                    content: url("/assets/imgs/search.svg");
+                    margin-right: 10px;
+                }
+            }
+            label:before {
+                content: url("/assets/imgs/search.svg");
+                position: absolute;
+                left: 15px;
+                opacity: 0.5;
+            }
+        }
+        .items-grid-wrapper {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            height: 0;
+            flex-grow: 1;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 15px;
+            box-sizing: border-box;
+            overflow: scroll;
+            .grid-item {
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                position: relative;
+                outline: 1px solid;
+                border-radius: 10px;
+                width: calc(50% - 10px);
+                min-height: 317px;
+                max-height: 317px;
+                box-sizing: border-box;
+                padding: 30px;
+                background-color: #000;
+                transition: .25s var(--app-main-animation-curve);
+                * {
+                    z-index: 2;
+                }
+                .item-header {
+                    font-size: 1.5rem;
+                }
+                .item-bottom-part {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    width: 100%;
+                    height: fit-content;
+                    margin-top: auto;
+                    .item-file-meta {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 10px;
+                        .item-file-name, .item-file-size, .item-file-type {
+                            opacity: 0.75;
+                            font-size: 0.9rem;
+                        }
+                    }
+                    .download-btn {
+                        display: flex;
+                        flex-direction: row;
+                        padding: 15px;
+                        box-sizing: border-box;
+                        background-color: var(--app-download-btns-bg);
+                        cursor: pointer;
+                        text-decoration: underline;
+                        text-decoration-color: transparent;
+                        transition: .25s var(--app-main-animation-curve);
+                        border-radius: 5px;
+                    }
+                    .download-btn:hover {
+                        text-decoration-color: #fff;
+                    }
+                }
+            }
+            .grid-item:hover {
+                transform: scale(1.025);
+                z-index: 5;
+            }
+            .grid-item:hover:before {
+                opacity: 1;
+            }
+            .grid-item:before {
+                position: absolute;
+                right: calc(0px - 250px);
+                bottom: calc(0px - 250px);
+                content: "";
+                width: 500px;
+                height: 500px;
+                filter: blur(150px);
+                background-color: aquamarine;
+                z-index: 1;
+                transition: .25s var(--app-main-animation-curve);
+                opacity: 0;
+            }
+        }
+    }
+}
+
+@keyframes logoSpin {
+    0% {
+        transform: scaleX(1);
+    }
+    50% {
+        transform: scaleX(-1);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
